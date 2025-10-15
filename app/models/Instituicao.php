@@ -37,5 +37,26 @@ Class Instituicao {
             ":ajuda_aceita"=> $this->ajuda_aceita
         ]);
     }
+
+    public function ListarAprovadas() {
+        $query = "SELECT * FROM {$this->table} WHERE aprovado = 1 ORDER BY data_registo DESC";
+        return $this->conn->query($query);
+    }
+
+    public function ListarPendentes() {
+        $query = "SELECT * FROM {$this->table} WHERE aprovado = 0";
+        return $this->conn->query($query);
+    }
+
+    public function aprovar($id) {
+        $stmt = $this->conn->prepare("UPDATE {$this->table} SET aprovado = 1 WHERE id = :id");
+        #stmt->binParam(:)
+    }
+
+
+
+
+
+
 }
 ?>
