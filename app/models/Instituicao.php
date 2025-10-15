@@ -50,13 +50,15 @@ Class Instituicao {
 
     public function aprovar($id) {
         $stmt = $this->conn->prepare("UPDATE {$this->table} SET aprovado = 1 WHERE id = :id");
-        #stmt->binParam(:)
+        $stmt->bindParam(":id", $id);
+        return $stmt->execute();
     }
 
-
-
-
-
+    public function rejeitar($id) {
+        $stmt = $this->conn->prepare("DELETE FROM ($this->table) WHERE id = :id");
+        $stmt->bindParam(":id", $id);
+        return $stmt->execute();
+    }
 
 }
 ?>
