@@ -14,54 +14,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title> Cadastro de Instituição</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+    <!-- CSS personalizado -->
     <link rel="stylesheet" href="../public/css/style.css">
 </head>
-<body>
-    <div class="container">
-        <h1>Cadastro de Instuição de Caridade</h1>
+<body class="bg-light">
+   <div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
 
-        <?php if (isset($_GET['sucesso'])): ?>
-            <p class="sucesso">Instituição cadastrada com sucesso!</p>
-        <?php elseif (isset($_GET['erro'])): ?>
-            <p class="erro">Ocorreu um erro ao cadastrar. Tente novamente.</p>
-        <?php endif; ?>
+        <div class="card shadow-sm">
+            <div class="card-header text-center bg-primary text-white">
+                <h4>Cadastro de Instituição de Caridade</h4>
+            </div>
+
+            <div class="card-body">
+                <?php if (isset($_GET['sucesso'])): ?>
+                    <div class="alert alert-success text-center">
+                       ✅ Instituição cadastrada com sucesso!
+                    </div>
+            </div>
+        </div>
+        </div>
     </div>
-
-    <form method="POST">
-        <label>Nome:</label>
-        <input type="text" name="nome" required>
-
-        <label>Descrição:</label>
-        <textarea name="descricao"></textarea>
-
-        <label>Cidade:</label>
-        <input type="text" name="cidade">
-
-        <label>Bairro:</label>
-        <input type="text" name="bairro">
-
-        <label>Endereço:</label>
-        <input type="text" name="endereco">
-
-        <label>Telefone:</label>
-        <input type="text" name="telefone">
-
-        <label>Email:</label>
-        <input type="text" name="email">
-
-        <label>Website:</label>
-        <input type="text" name="website">
-
-        <button type="submit">Cadastrar</button>
-    </form>
-
-
-
-
-
-
-
-
+   </div>
 
 
 
