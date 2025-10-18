@@ -1,18 +1,19 @@
 <?php 
+// Classe responsável por representar e manipular dados da instituição
+
 Class Instituicao {
     private $conn;
     private $table = "instituicoes";
 
-
+    public $id;
     public $nome;
-    public $tipo;
+    public $descricao;
     public $cidade;
     public $bairro;
     public $endereco;
     public $telefone;
     public $email;
-    public $descricao;
-    public $ajuda_aceita;
+    public $website;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -20,44 +21,33 @@ Class Instituicao {
 
     public function criar() {
         $query = "INSERT INTO {$this->table}
-        (nome, tipo, cidade, bairro, endereco, telefone, email, descricao, ajuda_aceita)
-        VALUES (:nome, :tipo, :cidade, :bairro, :endereco, :telefone, :email, :descricao, :ajuda_aceita)";
+        (nome, descricao, cidade, bairro, endereco, telefone, email, website)
+        VALUES (:nome, :descricao, :cidade, :bairro, :endereco, :telefone, :email, :website)";
 
         $stmt = $this->conn->prepare($query);
 
-        return $stmt->execute([
-            ":nome" => $this->nome,
-            ":tipo" => $this->tipo,
-            ":cidade" => $this->cidade,
-            ":bairro" => $this->bairro,
-            ":endereco" => $this->endereco,
-            ":telefone" => $this->telefone,
-            ":email" => $this->email,
-            ":descricao" => $this->descricao,
-            ":ajuda_aceita"=> $this->ajuda_aceita
-        ]);
-    }
+        // Limpa os dados
+        $this->nome = htmlspecialchars(strip_tags($this->nome));
+        $this->descricao = htmlspecialchars(strip_tags($this->descricao));
+        $this->cidade = htmlspecialchars(strip_tags($this->cidade));
+        $this->bairro = htmlspecialchars(strip_tags($this->bairro));
+        $this->endereco = htmlspecialchars(strip_tags($this->endereco));
+        $this->telefone = htmlspecialchars(strip_tags($this->telefone));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->website = htmlspecialchars(strip_tags($this->website));
 
-    public function ListarAprovadas() {
-        $query = "SELECT * FROM {$this->table} WHERE aprovado = 1 ORDER BY data_registo DESC";
-        return $this->conn->query($query);
-    }
+        // Liga os parâmetros
+        $stmt->bindParam(":nome", $this->nome);
+        $stmt->bindParam(":descricao", $this->descricao);
+        $stmt->bindParam(":cidade", $this->cidade);
+        $stmt->bindParam(":bairro", $this->bairro);
+        $stmt->bindParam(":endereco", $this->endereco);
+        $stmt->bindParam(":telefone", $this->telefone);
+        $stmt->bindParam(":email", $this->email);
+        $stmt->bindParam(":website", $this->website);
 
-    public function ListarPendentes() {
-        $query = "SELECT * FROM {$this->table} WHERE aprovado = 0";
-        return $this->conn->query($query);
-    }
-
-    public function aprovar($id) {
-        $stmt = $this->conn->prepare("UPDATE {$this->table} SET aprovado = 1 WHERE id = :id");
-        $stmt->bindParam(":id", $id);
         return $stmt->execute();
-    }
 
-    public function rejeitar($id) {
-        $stmt = $this->conn->prepare("DELETE FROM ($this->table) WHERE id = :id");
-        $stmt->bindParam(":id", $id);
-        return $stmt->execute();
     }
 
 }
