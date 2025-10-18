@@ -22,10 +22,10 @@ class InstituicaoController {
             $instituicao->website = $_POST['website'];
 
             if ($instituicao->criar()) {
-                header("Location: /views/instituicao_cadastro.php?sucesso=1");
+                header("Location: /ajudaperto/views/instituicao_cadastro.php?sucesso=1");
                 exit;
             } else {
-                header("Location: /views/instituicao_cadastro.php?erro=1");
+                header("Location: /ajudaperto/views/instituicao_cadastro.php?erro=1");
                 exit;
             }
         }

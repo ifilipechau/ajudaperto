@@ -21,12 +21,14 @@ form label {
     display: block;
     margin-top: 10px;
     font-weight: bold;
+    display: center;
 }
 
 form input, form textarea {
-    width: 100%;
+    width: 30%;
     padding: 8px;
     margin-top: 5px;
+    display: center;
 }
 
 button {
